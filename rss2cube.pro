@@ -1,17 +1,20 @@
 ;; warrenj 20150217 Routine to call p3d_rss2cube.pro to change the
 ;; final image into a datacube format [x, y, λ]
+;;
+;; warrenj 20150520 Altered to fit with the changes to
+;; combine_exposures routine. 
 
 
-pro rss2cube, galaxy, OB
+
+pro rss2cube, galaxy
 
 
-	dataset = '/Data/vimosindi/' + galaxy +'-' + OB
+	dataset = '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
+FILE_MKDIR, '/Data/vimosindi/reduced/' + galaxy + '/rss'
 
-FILE_MKDIR, dataset + '/Final'
-
-	files = FILE_SEARCH(dataset + '/combined/combined_exposures/*.fits')
+	files = FILE_SEARCH(dataset + '/*.fits')
 	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
-	opath = dataset + '/Final'
+	opath = '/Data/vimosindi/reduced/' + galaxy + '/rss'
 	userparfile = '/Data/vimosindi/user_p3d.dat'
 
 

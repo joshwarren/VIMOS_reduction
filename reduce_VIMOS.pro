@@ -13,14 +13,14 @@ pro run_reduction
 
 
 	galaxy = 'ngc3557'
-	OB = '1'
+	OB = '2'
 ;	quadrant = 1
 
 
 
-RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
-	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
-	'darc', 'combine_exposures', 'rss2cube']
+;RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
+;	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
+;	'darc', 'combine_exposures', 'rss2cube']
 
 
 
@@ -44,9 +44,11 @@ endfor
 
 ;	darc, galaxy, OB
 
-;	combine_exposures, galaxy, OB
 
-	rss2cube, galaxy, OB
+;; now combines all OBs
+	combine_exposures, galaxy
+
+	rss2cube, galaxy
 
 
 
