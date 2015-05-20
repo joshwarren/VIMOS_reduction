@@ -10,11 +10,11 @@ pro rss2cube, galaxy
 
 
 	dataset = '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
-FILE_MKDIR, '/Data/vimosindi/reduced/' + galaxy + '/rss'
+FILE_MKDIR, '/Data/vimosindi/reduced/' + galaxy + '/cube'
 
 	files = FILE_SEARCH(dataset + '/*.fits')
 	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
-	opath = '/Data/vimosindi/reduced/' + galaxy + '/rss'
+	opath = '/Data/vimosindi/reduced/' + galaxy + '/cube'
 	userparfile = '/Data/vimosindi/user_p3d.dat'
 
 
