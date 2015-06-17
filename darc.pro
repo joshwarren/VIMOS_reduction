@@ -4,8 +4,10 @@
 
 pro darc, galaxy, OB
 
+        str_OB = STRTRIM(STRING(OB),2)
 
-	dataset = '/Data/vimosindi/' + galaxy +'-' + OB + '/combined'
+	dataset = '/Data/vimosindi/' + galaxy +'-' + str_OB + $
+		'/combined'
 
 	files = FILE_SEARCH(dataset + '/VIMOS*vmcmb.fits')
 	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'

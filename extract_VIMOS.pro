@@ -17,24 +17,29 @@ pro extract_VIMOS, galaxy, OB, quadrant
 ;for quadrant = 1, 4 do begin
 
 	str_quadrant = STRTRIM(STRING(quadrant),2)
-	dataset = '/Data/vimosindi/' + galaxy +'-' + OB + '/Q' + $
-		str_quadrant
+        str_OB = STRTRIM(STRING(OB),2)
+	dataset = '/Data/vimosindi/' + galaxy +'-' + str_OB + $
+		'/Q' + str_quadrant
 	
 	files = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')
 	
 
 	objectfiles = [files[0], files[1]]
 	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
-	bias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + OB + $
-		'/Bias/Q' + str_quadrant + '/*mbias' + str_quadrant + '.fits')
-	tracemask  = FILE_SEARCH(dataset + '/*_trace' + str_quadrant + '.fits')
-	dispmask = FILE_SEARCH(dataset + '/*_dmask' + str_quadrant + '.fits')
-	flatfield = FILE_SEARCH(dataset + '/*_flatf' + str_quadrant + '.fits')
+	bias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + str_OB + $
+		'/Bias/Q' + str_quadrant + '/*mbias' + str_quadrant + $
+		'.fits')
+	tracemask  = FILE_SEARCH(dataset + '/*_trace' + str_quadrant + $
+		'.fits')
+	dispmask = FILE_SEARCH(dataset + '/*_dmask' + str_quadrant + $
+		'.fits')
+	flatfield = FILE_SEARCH(dataset + '/*_flatf' + str_quadrant + $
+		'.fits')
 	opath = dataset	
 	userparfile = '/Data/vimosindi/user_p3d.dat' 
 	detector = quadrant - 1
 
-        
+
 ;; warrenj 20150211 Not sure if I need the skyline or not - it is also
 ;; 	given in the user parameter file and I would rather it was
 ;; 	only given in one place.  

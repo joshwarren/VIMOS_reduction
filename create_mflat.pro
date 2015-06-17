@@ -14,7 +14,8 @@ pro create_mflat, galaxy, OB, quadrant
 ;for quadrant = 1, 4 do begin
 
 	str_quadrant = STRTRIM(STRING(quadrant),2)
-	dataset = '/Data/vimosindi/' + galaxy +'-' + OB + '/Q' + $
+        str_OB = STRTRIM(STRING(OB),2)
+	dataset = '/Data/vimosindi/' + galaxy +'-' + str_OB + '/Q' + $
 		str_quadrant
 	
 	files = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')
@@ -22,10 +23,13 @@ pro create_mflat, galaxy, OB, quadrant
 
 	ffiles = [files[2], files[3], files[4]]
 	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
-	mbias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + OB + $
-		'/Bias/Q' + str_quadrant + '/*mbias' + str_quadrant + '.fits')
-	tracemask  = FILE_SEARCH(dataset + '/*_trace' + str_quadrant + '.fits')
-	dispmark = FILE_SEARCH(dataset + '/*_dmask' + str_quadrant + '.fits')
+	mbias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + str_OB + $
+		'/Bias/Q' + str_quadrant + '/*mbias' + str_quadrant + $
+		'.fits') 
+	tracemask  = FILE_SEARCH(dataset + '/*_trace' + str_quadrant + $
+		'.fits') 
+	dispmark = FILE_SEARCH(dataset + '/*_dmask' + str_quadrant + $
+		'.fits')
 	opath = dataset	
 	userparfile = '/Data/vimosindi/user_p3d.dat' 
 	detector = quadrant - 1

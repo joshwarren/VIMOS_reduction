@@ -19,11 +19,12 @@ pro fluxcal, galaxy, OB, quadrant
 
 
 	str_quadrant = STRTRIM(STRING(quadrant),2)
+        str_OB = STRTRIM(STRING(OB),2)
 
 
 
-
-	dataset='/Data/vimosindi/' + galaxy + '-' + OB + '/Q' + str_quadrant
+	dataset='/Data/vimosindi/' + galaxy + '-' + str_OB + '/Q' + $
+		str_quadrant
 	FILE_MKDIR, dataset + '/calibrated'
 
 

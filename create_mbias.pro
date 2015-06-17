@@ -12,7 +12,9 @@ pro create_mbias, galaxy, OB, quadrant
 ;for quadrant = 1, 4 do begin
 
 	str_quadrant = STRTRIM(STRING(quadrant),2)
-	dataset = '/Data/vimosindi/' + galaxy +'-' + OB + '/bias/Q' + str_quadrant
+	str_OB = STRTRIM(STRING(OB),2)
+	dataset = '/Data/vimosindi/' + galaxy +'-' + str_OB + $
+		'/bias/Q' + str_quadrant
 
 
 	bfiles = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')

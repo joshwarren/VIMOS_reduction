@@ -11,8 +11,9 @@ pro combine_quadrants, galaxy, OB
 
 ;galaxy = 'ngc3557'
 ;OB = '1'
+        str_OB = STRTRIM(STRING(OB),2)
 
-dataset = '/Data/vimosindi/' + Galaxy + '-' + OB
+dataset = '/Data/vimosindi/' + Galaxy + '-' + str_OB
 	files = FILE_SEARCH(dataset + '/Q?/calibrated/*fluxcal*.fits')
 
 
