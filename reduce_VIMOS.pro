@@ -12,9 +12,10 @@
 pro run_reduction
 
 
-	galaxy = 'ngc3557'
+;	galaxy = 'ngc3557'
+	galaxy = 'ic1459'
 ;	OB = '2'
-	quadrant = '4'
+;	quadrant = '2'
 
 
 
@@ -24,7 +25,7 @@ RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
 
 
 for OB = 1, 3 do begin
-;for quadrant = 1, 4 do begin
+for quadrant = 1, 4 do begin
 
 	create_mbias, galaxy, OB, quadrant
 
@@ -37,7 +38,7 @@ for OB = 1, 3 do begin
 	extract_VIMOS, galaxy, OB, quadrant
 
 	fluxcal, galaxy, OB, quadrant
-;endfor
+endfor
 
 	combine_quadrants, galaxy, OB
 
@@ -73,35 +74,38 @@ pro sort_quadrants
 
 
 ;RESOLVE_ROUTINE, ['headfits']
-	galaxy = 'ngc3557'
-	OB = '1'
+;	galaxy = 'ngc3557'
+	galaxy = 'ic1459'
 
-	dataset = '/Data/vimosindi/' + galaxy + '-' + OB
+for OB = 1, 3 do begin
+    dataset = '/Data/vimosindi/' + galaxy + '-' + $
+        STRTRIM(STRING(OB),2); + '/Bias'
+    files = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')
+    n_files = n_elements(files)
+if files[0] eq "" then n_files = 0
 
-files = FILE_SEARCH(dataset + '/Q1/*[0-9][0-9].[0-9][0-9][0-9].fits')
+if n_files ne 0 then begin
+    for i = 0, n_files-1 do begin
+        str_file = strsplit(files[i], '/', /EXTRACT)
+        file = str_file[-1]
+        FITS_READ, files[i], data_cube, header
+        header_entry = header(where(strmatch(header, $
+             'HIERARCH ESO DET CHIP1 ID*', /FOLD_CASE) eq 1))
 
+;; ---------================== Move Files ================-----------
+        if strmatch(header_entry, '*BRIAN*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q1/' + file
+        if strmatch(header_entry, '*Keith*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q2/' + file
+        if strmatch(header_entry, '*Tom*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q3/' + file
+        if strmatch(header_entry, '*DAVID*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q4/' + file
 
-
-
-
-
-
-;for i = 0, 23 do begin
-
-	hdr = headfits(files[0])
-	header = 'DET CHIP1 ID'
-	headerArray = hdr[where(strmatch(hdr, '*' + header + '*') EQ 1)]
-	result = STRSPLIT(headerArray, '=/',/extract)
-	print, headerArray
-	print, result[1]
-
-;; NB: string(39B) is an apostrophe 
-if (result[1] EQ ' ' + string(39B) + 'BRIAN   ' + string(39B) + ' ') THEN BEGIN
- print, 'BRIAN'
+     endfor
 endif
+endfor
 
-
-;endfor
 
 
 return
