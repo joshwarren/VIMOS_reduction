@@ -21,7 +21,7 @@ pro create_mtrace, galaxy, OB, quadrant
 	files = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')
 	
 	ffiles = [files[2], files[3], files[4]]
-	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = dataset
 	mbias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + str_OB + $
 		'/Bias/Q' + str_quadrant + '/*mbias' + str_quadrant + $

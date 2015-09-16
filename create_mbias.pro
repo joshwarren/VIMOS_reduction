@@ -19,7 +19,7 @@ pro create_mbias, galaxy, OB, quadrant
 
 	bfiles = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')
 	
-	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = dataset
 	detector = quadrant - 1
 	userparfile='/Data/vimosindi/user_p3d.dat'

@@ -28,9 +28,18 @@ for OB = 1, 3 do begin
 for quadrant = 1, 4 do begin
 
 	create_mbias, galaxy, OB, quadrant
+endfor
+endfor
 
+; isolate the user interaction.
+for OB = 1, 3 do begin
+for quadrant = 1, 4 do begin
 	create_mtrace, galaxy, OB, quadrant
+endfor
+endfor
 
+for OB = 1, 3 do begin
+for quadrant = 1, 4 do begin
 	create_mdmask, galaxy, OB, quadrant
 
 	create_mflat, galaxy, OB, quadrant

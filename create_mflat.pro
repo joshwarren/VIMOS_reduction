@@ -22,7 +22,7 @@ pro create_mflat, galaxy, OB, quadrant
 	
 
 	ffiles = [files[2], files[3], files[4]]
-	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	mbias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + str_OB + $
 		'/Bias/Q' + str_quadrant + '/*mbias' + str_quadrant + $
 		'.fits') 

@@ -30,7 +30,7 @@ pro fluxcal, galaxy, OB, quadrant
 
 	filename=FILE_SEARCH(dataset + '/*_crcl_oextr' + str_quadrant + $
 		'.fits')
-        parfile='/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+        parfile='/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
         findSensFunc=FILE_SEARCH('/Data/vimosindi/Feige110/Take2/Q' + $
 		str_quadrant + '/fluxcal/*_fluxsens.fits')
 ;	findSensFunc = FILE_SEARCH('/Data/vimosindi/Feige110/test.fits')

@@ -25,7 +25,7 @@ pro extract_VIMOS, galaxy, OB, quadrant
 	
 
 	objectfiles = [files[0], files[1]]
-	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	bias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + str_OB + $
 		'/Bias/Q' + str_quadrant + '/*mbias' + str_quadrant + $
 		'.fits')

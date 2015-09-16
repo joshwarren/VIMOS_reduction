@@ -10,7 +10,7 @@ pro darc, galaxy, OB
 		'/combined'
 
 	files = FILE_SEARCH(dataset + '/VIMOS*vmcmb.fits')
-	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = dataset
 	userparfile = '/Data/vimosindi/user_p3d.dat'
 

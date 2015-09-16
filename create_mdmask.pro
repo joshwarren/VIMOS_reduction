@@ -26,7 +26,7 @@ pro create_mdmask, galaxy, OB, quadrant
 ;FILE_MKDIR, dataset + '/dtest'	
 
 	dfiles = files[5]
-	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	mbias = FILE_SEARCH('/Data/vimosindi/' + galaxy +'-' + $
 		str_OB + '/Bias/Q' + str_quadrant + '/*mbias' + $
 		str_quadrant + '.fits') 
@@ -34,7 +34,7 @@ pro create_mdmask, galaxy, OB, quadrant
 	opath = dataset	;+ '/dtest'
 	userparfile = '/Data/vimosindi/user_p3d.dat' 
 	detector = quadrant - 1
-;	arclinelist = '/Data/p3d/data/tables/linelists/vimos_hr-blue.dat'
+;	arclinelist = '/Data/idl_libraries/p3d/data/tables/linelists/vimos_hr-blue.dat'
 
 
 

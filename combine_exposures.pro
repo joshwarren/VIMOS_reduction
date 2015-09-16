@@ -14,7 +14,7 @@ FILE_MKDIR, '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
 
 
 	files = FILE_SEARCH(dataset + '/*_darc.fits')
-	parfile = '/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
 	userparfile = '/Data/vimosindi/user_p3d.dat'
 

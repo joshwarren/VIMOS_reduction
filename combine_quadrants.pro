@@ -23,7 +23,7 @@ dataset = '/Data/vimosindi/' + Galaxy + '-' + str_OB
 
 FILE_MKDIR, dataset + '/combined'
 
-        parfile='/Data/p3d/data/instruments/vimos/bvimos_hr.prm'
+        parfile='/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = dataset  + '/combined'
 	userparfile = '/Data/vimosindi/user_p3d.dat'
 
