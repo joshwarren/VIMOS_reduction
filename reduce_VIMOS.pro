@@ -23,42 +23,60 @@ RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
 	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
 	'darc', 'combine_exposures', 'rss2cube']
 
+OB = 2
+quadrant = 2
+;for OB = 1, 3 do begin
+	print, 'OB: ' + STRTRIM(STRING(OB),2)
 
-for OB = 1, 3 do begin
-for quadrant = 1, 4 do begin
+;for quadrant = 1, 4 do begin
+	print, 'Q' + STRTRIM(STRING(quadrant),2)
 
 	create_mbias, galaxy, OB, quadrant
-endfor
-endfor
 
-; isolate the user interaction.
-for OB = 1, 3 do begin
-for quadrant = 1, 4 do begin
 	create_mtrace, galaxy, OB, quadrant
-endfor
-endfor
+;endfor
+;endfor
 
-for OB = 1, 3 do begin
-for quadrant = 1, 4 do begin
+
+;; isolate the user interaction.
+;for OB = 1, 3 do begin
+	print, 'OB: ' + STRTRIM(STRING(OB),2)
+
+;for quadrant = 1, 4 do begin
+	print, 'Q' + STRTRIM(STRING(quadrant),2)
+	
 	create_mdmask, galaxy, OB, quadrant
+
+;endfor
+;endfor
+
+;for OB = 1, 3 do begin
+	print, 'OB: ' + STRTRIM(STRING(OB),2)
+
+;for quadrant = 1, 4 do begin
+	print, 'Q' + STRTRIM(STRING(quadrant),2)
 
 	create_mflat, galaxy, OB, quadrant
 
 	extract_VIMOS, galaxy, OB, quadrant
 
 	fluxcal, galaxy, OB, quadrant
-endfor
+;endfor
+
+	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
 
 	combine_quadrants, galaxy, OB
 
 	darc, galaxy, OB
-endfor
-
-;; now combines all OBs
-	combine_exposures, galaxy
-
-	rss2cube, galaxy
-
+;endfor
+	
+;	print, 'Combine all exposures'
+;
+;;; now combines all OBs
+;	combine_exposures, galaxy
+;
+;	rss2cube, galaxy
+;
 
 
 	return
