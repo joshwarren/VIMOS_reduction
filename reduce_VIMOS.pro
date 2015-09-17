@@ -23,43 +23,43 @@ RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
 	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
 	'darc', 'combine_exposures', 'rss2cube']
 
+;for OB = 1, 3 do begin
+;	print, 'OB: ' + STRTRIM(STRING(OB),2)
+;
+;for quadrant = 1, 4 do begin
+;	print, 'Q' + STRTRIM(STRING(quadrant),2)
+;
+;	create_mbias, galaxy, OB, quadrant
+;
+;	create_mtrace, galaxy, OB, quadrant
+;endfor
+;endfor
+;
+;
+;;; isolate the user interaction.
+;for OB = 1, 3 do begin
+;	print, 'OB: ' + STRTRIM(STRING(OB),2)
+;
+;for quadrant = 1, 4 do begin
+;	print, 'Q' + STRTRIM(STRING(quadrant),2)
+;	
+;;	create_mdmask, galaxy, OB, quadrant
+;endfor
+;endfor
+;
+;
 for OB = 1, 3 do begin
 	print, 'OB: ' + STRTRIM(STRING(OB),2)
 
-for quadrant = 1, 4 do begin
-	print, 'Q' + STRTRIM(STRING(quadrant),2)
-
-	create_mbias, galaxy, OB, quadrant
-
-	create_mtrace, galaxy, OB, quadrant
-endfor
-endfor
-
-
-;; isolate the user interaction.
-for OB = 1, 3 do begin
-	print, 'OB: ' + STRTRIM(STRING(OB),2)
-
-for quadrant = 1, 4 do begin
-	print, 'Q' + STRTRIM(STRING(quadrant),2)
-	
-	create_mdmask, galaxy, OB, quadrant
-endfor
-endfor
-
-
-for OB = 1, 3 do begin
-	print, 'OB: ' + STRTRIM(STRING(OB),2)
-
-for quadrant = 1, 4 do begin
-	print, 'Q' + STRTRIM(STRING(quadrant),2)
-
-	create_mflat, galaxy, OB, quadrant
-
-	extract_VIMOS, galaxy, OB, quadrant
-
-	fluxcal, galaxy, OB, quadrant
-endfor
+;for quadrant = 1, 4 do begin
+;	print, 'Q' + STRTRIM(STRING(quadrant),2)
+;
+;	create_mflat, galaxy, OB, quadrant
+;
+;	extract_VIMOS, galaxy, OB, quadrant
+;
+;	fluxcal, galaxy, OB, quadrant
+;endfor
 
 	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
 
