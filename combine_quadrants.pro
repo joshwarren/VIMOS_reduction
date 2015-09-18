@@ -6,16 +6,21 @@
 ;; an OB.
 
 
-pro combine_quadrants, galaxy, OB
+pro combine_quadrants, galaxy, OB, method
 
 
 ;galaxy = 'ngc3557'
 ;OB = '1'
         str_OB = STRTRIM(STRING(OB),2)
 
-dataset = '/Data/vimosindi/' + Galaxy + '-' + str_OB
-	files = FILE_SEARCH(dataset + '/Q?/calibrated/*fluxcal*.fits')
+	dataset = '/Data/vimosindi/' + Galaxy + '-' + str_OB
 
+
+if method eq "telluric" then begin
+    files = FILE_SEARCH(dataset + '/Q?/calibrated/*fluxcal*.fits')
+endif else if method eq "nofcdgoodnorm" then begin
+    files = FILE_SEARCH(dataset + '/Q?/*_crcl_oextr?.fits')
+endif
 
 
 	files1 = [files[0], files[2], files[4], files[6]]

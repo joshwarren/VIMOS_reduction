@@ -23,6 +23,25 @@ RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
 	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
 	'darc', 'combine_exposures', 'rss2cube']
 
+
+
+
+
+userparfile = '/Data/vimosindi/user_p3d.dat'
+
+readcol, userparfile, uparname, uparvalue, format='a, a', $
+    delimiter=' ', /silent, comment=';'
+
+cquadrant_method = "telluric"
+
+i_nofcdgoodnorm = where(uparname eq "nofcdgoodnorm", nofcdgoodnorm)
+
+if nofcdgoodnorm then cquadrant_method = "nofcdgoodnorm"
+
+
+
+
+
 ;for OB = 1, 3 do begin
 ;	print, 'OB: ' + STRTRIM(STRING(OB),2)
 ;
@@ -51,19 +70,20 @@ RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
 for OB = 1, 3 do begin
 	print, 'OB: ' + STRTRIM(STRING(OB),2)
 
-;for quadrant = 1, 4 do begin
-;	print, 'Q' + STRTRIM(STRING(quadrant),2)
+for quadrant = 1, 4 do begin
+	print, 'Q' + STRTRIM(STRING(quadrant),2)
 ;
 ;	create_mflat, galaxy, OB, quadrant
 ;
 ;	extract_VIMOS, galaxy, OB, quadrant
-;
-;	fluxcal, galaxy, OB, quadrant
-;endfor
+
+if (cquadrant_method eq "telluric") then fluxcal, galaxy, OB, quadrant
+
+endfor
 
 	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
 
-	combine_quadrants, galaxy, OB
+	combine_quadrants, galaxy, OB, cquadrant_method
 
 	darc, galaxy, OB
 endfor
