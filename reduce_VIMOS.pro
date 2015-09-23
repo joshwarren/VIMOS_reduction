@@ -13,15 +13,18 @@ pro run_reduction
 
 
 ;	galaxy = 'ngc3557'
-	galaxy = 'ic1459'
+;	galaxy = 'ic1459'
+	galaxy = 'ic1531'
 ;	OB = '2'
 ;	quadrant = '2'
 
 
+;sort_quadrants, galaxy
 
-RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
-	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
-	'darc', 'combine_exposures', 'rss2cube']
+
+;RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
+;	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
+;	'darc', 'combine_exposures', 'rss2cube']
 
 
 
@@ -42,40 +45,40 @@ if nofcdgoodnorm then cquadrant_method = "nofcdgoodnorm"
 
 
 
-;for OB = 1, 3 do begin
-;	print, 'OB: ' + STRTRIM(STRING(OB),2)
-;
-;for quadrant = 1, 4 do begin
-;	print, 'Q' + STRTRIM(STRING(quadrant),2)
-;
-;	create_mbias, galaxy, OB, quadrant
-;
-;	create_mtrace, galaxy, OB, quadrant
-;endfor
-;endfor
-;
-;
-;;; isolate the user interaction.
-;for OB = 1, 3 do begin
-;	print, 'OB: ' + STRTRIM(STRING(OB),2)
-;
-;for quadrant = 1, 4 do begin
-;	print, 'Q' + STRTRIM(STRING(quadrant),2)
-;	
-;;	create_mdmask, galaxy, OB, quadrant
-;endfor
-;endfor
-;
-;
 for OB = 1, 3 do begin
 	print, 'OB: ' + STRTRIM(STRING(OB),2)
 
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
-;
-;	create_mflat, galaxy, OB, quadrant
-;
-;	extract_VIMOS, galaxy, OB, quadrant
+
+;	create_mbias, galaxy, OB, quadrant
+
+;	create_mtrace, galaxy, OB, quadrant
+endfor
+endfor
+
+
+;; isolate the user interaction.
+for OB = 1, 3 do begin
+	print, 'OB: ' + STRTRIM(STRING(OB),2)
+
+for quadrant = 1, 4 do begin
+	print, 'Q' + STRTRIM(STRING(quadrant),2)
+	
+	create_mdmask, galaxy, OB, quadrant
+endfor
+endfor
+
+
+for OB = 1, 3 do begin
+	print, 'OB: ' + STRTRIM(STRING(OB),2)
+
+for quadrant = 1, 4 do begin
+	print, 'Q' + STRTRIM(STRING(quadrant),2)
+
+	create_mflat, galaxy, OB, quadrant
+
+	extract_VIMOS, galaxy, OB, quadrant
 
 if (cquadrant_method eq "telluric") then fluxcal, galaxy, OB, quadrant
 
@@ -114,13 +117,7 @@ end
 ;; Q3 = Tom
 ;; Q4 = DAVID
 
-pro sort_quadrants
-
-
-
-;RESOLVE_ROUTINE, ['headfits']
-;	galaxy = 'ngc3557'
-	galaxy = 'ic1459'
+pro sort_quadrants, galaxy
 
 for OB = 1, 3 do begin
     dataset = '/Data/vimosindi/' + galaxy + '-' + $
@@ -151,6 +148,36 @@ if n_files ne 0 then begin
 endif
 endfor
 
+;; ---------================== Move Bias =================-----------
+
+for OB = 1, 3 do begin
+    dataset = '/Data/vimosindi/' + galaxy + '-' + $
+        STRTRIM(STRING(OB)+ '/Bias', 2) 
+    files = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')
+    n_files = n_elements(files)
+if files[0] eq "" then n_files = 0
+
+if n_files ne 0 then begin
+    for i = 0, n_files-1 do begin
+        str_file = strsplit(files[i], '/', /EXTRACT)
+        file = str_file[-1]
+        FITS_READ, files[i], data_cube, header
+        header_entry = header(where(strmatch(header, $
+             'HIERARCH ESO DET CHIP1 ID*', /FOLD_CASE) eq 1))
+
+;; ---------================== Move Files ================-----------
+        if strmatch(header_entry, '*BRIAN*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q1/' + file
+        if strmatch(header_entry, '*Keith*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q2/' + file
+        if strmatch(header_entry, '*Tom*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q3/' + file
+        if strmatch(header_entry, '*DAVID*', /FOLD_CASE) then $
+            FILE_MOVE, files[i], dataset + '/Q4/' + file
+
+     endfor
+endif
+endfor
 
 
 return
