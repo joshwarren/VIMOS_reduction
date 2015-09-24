@@ -50,10 +50,12 @@ for OB = 1, 3 do begin
 
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
-
+	
+	print, 'Bias'
 ;	create_mbias, galaxy, OB, quadrant
 
-;	create_mtrace, galaxy, OB, quadrant
+	print, "Trace"
+	create_mtrace, galaxy, OB, quadrant
 endfor
 endfor
 
@@ -65,7 +67,8 @@ for OB = 1, 3 do begin
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 	
-	create_mdmask, galaxy, OB, quadrant
+	print, "Wavelength calibration"
+;	create_mdmask, galaxy, OB, quadrant
 endfor
 endfor
 
@@ -76,26 +79,39 @@ for OB = 1, 3 do begin
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 
+	print, "Flat Fielding"
 	create_mflat, galaxy, OB, quadrant
 
+	print, "Extract quadrant"
 	extract_VIMOS, galaxy, OB, quadrant
+;     endfor
+;endfor
 
-if (cquadrant_method eq "telluric") then fluxcal, galaxy, OB, quadrant
+;for OB = 1, 3 do begin
+;	print, 'OB: ' + STRTRIM(STRING(OB),2)
+
+;for quadrant = 1, 4 do begin
+;	print, 'Q' + STRTRIM(STRING(quadrant),2)
+
+if (cquadrant_method eq "telluric") then begin
+	print, "Flux calibration"
+	fluxcal, galaxy, OB, quadrant
+endif
 
 endfor
 
 	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
-
 	combine_quadrants, galaxy, OB, cquadrant_method
 
+	print, "darc"
 	darc, galaxy, OB
 endfor
 	
 	print, 'Combine all exposures'
-
 ;; now combines all OBs
 	combine_exposures, galaxy
 
+	print, "Create rss"
 	rss2cube, galaxy
 
 
