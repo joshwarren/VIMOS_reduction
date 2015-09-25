@@ -19,7 +19,7 @@ pro run_reduction
 ;	quadrant = '2'
 
 
-;sort_quadrants, galaxy
+sort_quadrants, galaxy
 
 
 ;RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
@@ -52,7 +52,7 @@ for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 	
 	print, 'Bias'
-;	create_mbias, galaxy, OB, quadrant
+	create_mbias, galaxy, OB, quadrant
 
 	print, "Trace"
 	create_mtrace, galaxy, OB, quadrant
@@ -68,7 +68,7 @@ for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 	
 	print, "Wavelength calibration"
-;	create_mdmask, galaxy, OB, quadrant
+	create_mdmask, galaxy, OB, quadrant
 endfor
 endfor
 
@@ -84,14 +84,6 @@ for quadrant = 1, 4 do begin
 
 	print, "Extract quadrant"
 	extract_VIMOS, galaxy, OB, quadrant
-;     endfor
-;endfor
-
-;for OB = 1, 3 do begin
-;	print, 'OB: ' + STRTRIM(STRING(OB),2)
-
-;for quadrant = 1, 4 do begin
-;	print, 'Q' + STRTRIM(STRING(quadrant),2)
 
 if (cquadrant_method eq "telluric") then begin
 	print, "Flux calibration"
