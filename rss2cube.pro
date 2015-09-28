@@ -23,6 +23,14 @@ FITS_READ, files[0], templates, header
 	waveend = sxpar(header,'CDELT2')*sxpar(header,'NAXIS2') + $
 		sxpar(header,'CRVAL2')
 
+;; Clear old files incase file name has changed so future routines are
+;; not confused by old files.
+old = FILE_SEARCH('/Data/vimosindi/reduced/' + galaxy + $
+	'/cube/*_cube.fits')
+if old ne "" then FILE_DELETE, old
+
+
+
 	p3d_rss2cube, files, parfile, wavestart = wavestart, $
 		waveend = waveend, userparfile=userparfile, opath=opath, $
 		logfile=opath + '/dred.log', $;allinone = 0, $

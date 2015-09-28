@@ -14,6 +14,13 @@ pro darc, galaxy, OB
 	opath = dataset
 	userparfile = '/Data/vimosindi/user_p3d.dat'
 
+
+;; Clear old files incase file name has changed so future routines are
+;; not confused by old files.
+old = FILE_SEARCH(dataset + '/*_darc*')
+if old ne "" then FILE_DELETE, old
+
+
 	p3d_darc, files, parfile, /nogui, userparfile=userparfile, $
 		opath=opath, logfile=opath + 'dred.log', verbose = 0, /quiet
 

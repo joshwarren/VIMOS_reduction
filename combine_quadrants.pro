@@ -28,6 +28,11 @@ endif
 
 FILE_MKDIR, dataset + '/combined'
 
+;; Clear old files incase file name has changed so future routines are
+;; not confused by old files.
+old = FILE_SEARCH(dataset + '/combined/*')
+if old[0] ne "" then FILE_DELETE, old
+
         parfile='/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = dataset  + '/combined'
 	userparfile = '/Data/vimosindi/user_p3d.dat'

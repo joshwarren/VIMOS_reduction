@@ -18,6 +18,15 @@ FILE_MKDIR, '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
 	opath = '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
 	userparfile = '/Data/vimosindi/user_p3d.dat'
 
+
+
+;; Clear old files incase file name has changed so future routines are
+;; not confused by old files.
+old = FILE_SEARCH('/Data/vimosindi/reduced/' + galaxy + $
+	'/combined_exposures/*_cexp.fits')
+FILE_DELETE, old
+
+
 	p3d_cexposure, files, parfile, pixrange = 40, $
 		userparfile=userparfile, opath=opath, $
 		logfile=opath + '/dred.log', verbose = 0, /quiet

@@ -12,14 +12,15 @@
 pro run_reduction
 
 
-;	galaxy = 'ngc3557'
-;	galaxy = 'ic1459'
+	galaxy = 'ngc3557'
+	galaxy = 'ic1459'
 	galaxy = 'ic1531'
+	galaxy = 'ic4296'
 ;	OB = '2'
 ;	quadrant = '2'
 
 
-sort_quadrants, galaxy
+;sort_quadrants, galaxy
 
 
 ;RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
@@ -51,11 +52,11 @@ for OB = 1, 3 do begin
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 	
-	print, 'Bias'
-	create_mbias, galaxy, OB, quadrant
+;	print, 'Bias'
+;	create_mbias, galaxy, OB, quadrant
 
-	print, "Trace"
-	create_mtrace, galaxy, OB, quadrant
+;	print, "Trace"
+;	create_mtrace, galaxy, OB, quadrant
 endfor
 endfor
 
@@ -67,8 +68,8 @@ for OB = 1, 3 do begin
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 	
-	print, "Wavelength calibration"
-	create_mdmask, galaxy, OB, quadrant
+;	print, "Wavelength calibration"
+;	create_mdmask, galaxy, OB, quadrant
 endfor
 endfor
 
@@ -79,11 +80,11 @@ for OB = 1, 3 do begin
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 
-	print, "Flat Fielding"
-	create_mflat, galaxy, OB, quadrant
+;	print, "Flat Fielding"
+;	create_mflat, galaxy, OB, quadrant
 
-	print, "Extract quadrant"
-	extract_VIMOS, galaxy, OB, quadrant
+;	print, "Extract quadrant"
+;	extract_VIMOS, galaxy, OB, quadrant
 
 if (cquadrant_method eq "telluric") then begin
 	print, "Flux calibration"
