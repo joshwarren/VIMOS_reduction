@@ -18,7 +18,7 @@ pro darc, galaxy, OB
 ;; Clear old files incase file name has changed so future routines are
 ;; not confused by old files.
 old = FILE_SEARCH(dataset + '/*_darc*')
-if old ne "" then FILE_DELETE, old
+if old[0] ne "" then FILE_DELETE, old
 
 
 	p3d_darc, files, parfile, /nogui, userparfile=userparfile, $

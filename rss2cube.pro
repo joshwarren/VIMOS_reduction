@@ -27,7 +27,7 @@ FITS_READ, files[0], templates, header
 ;; not confused by old files.
 old = FILE_SEARCH('/Data/vimosindi/reduced/' + galaxy + $
 	'/cube/*_cube.fits')
-if old ne "" then FILE_DELETE, old
+if old[0] ne "" then FILE_DELETE, old
 
 
 

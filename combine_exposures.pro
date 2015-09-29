@@ -24,7 +24,7 @@ FILE_MKDIR, '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
 ;; not confused by old files.
 old = FILE_SEARCH('/Data/vimosindi/reduced/' + galaxy + $
 	'/combined_exposures/*_cexp.fits')
-FILE_DELETE, old
+if old[0] ne "" then FILE_DELETE, old
 
 
 	p3d_cexposure, files, parfile, pixrange = 40, $

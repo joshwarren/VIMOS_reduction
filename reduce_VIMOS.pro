@@ -16,12 +16,31 @@ pro run_reduction
 	galaxy = 'ic1459'
 	galaxy = 'ic1531'
 	galaxy = 'ic4296'
+	galaxy = 'ngc0612'
+	galaxy = 'ngc1399'
+	galaxy = 'ngc3100'
 ;	OB = '2'
 ;	quadrant = '2'
 
 
-;sort_quadrants, galaxy
+wav_cal = 'y'
+start = 6
+;; num: starting point
+;; 0: All
+;; 1: Bias, skip sort quadrents
+;; 2: Trace
+;; 3: Wavelength calibration
+;; 4: Flat fielding
+;; 5: Extract
+;; 6: Flux calibration
+;; 7: Combine quadrants
+;; 8: Diffractive atmospheric corrections
+;; 9: Combine exposures
 
+if start le 0 then begin
+	print, "Sorting quadrants"
+	sort_quadrants, galaxy
+endif
 
 ;RESOLVE_ROUTINE, ['create_mbias','create_mtrace','create_mdmask', $
 ;	'create_mflat', 'extract_VIMOS', 'fluxcal', 'combine_quadrants', $
@@ -45,64 +64,77 @@ if nofcdgoodnorm then cquadrant_method = "nofcdgoodnorm"
 
 
 
-
+if start le 2 then begin
 for OB = 1, 3 do begin
 	print, 'OB: ' + STRTRIM(STRING(OB),2)
 
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
-	
-;	print, 'Bias'
-;	create_mbias, galaxy, OB, quadrant
 
-;	print, "Trace"
-;	create_mtrace, galaxy, OB, quadrant
+if start le 1 then begin	
+	print, 'Bias'
+	create_mbias, galaxy, OB, quadrant
+endif
+	print, "Trace"
+	create_mtrace, galaxy, OB, quadrant 
 endfor
 endfor
-
+endif 
 
 ;; isolate the user interaction.
-for OB = 1, 3 do begin
-	print, 'OB: ' + STRTRIM(STRING(OB),2)
-
-for quadrant = 1, 4 do begin
-	print, 'Q' + STRTRIM(STRING(quadrant),2)
-	
-;	print, "Wavelength calibration"
-;	create_mdmask, galaxy, OB, quadrant
-endfor
-endfor
-
-
+if start le 3 and wav_cal eq 'y' then begin
 for OB = 1, 3 do begin
 	print, 'OB: ' + STRTRIM(STRING(OB),2)
 
 for quadrant = 1, 4 do begin
 	print, 'Q' + STRTRIM(STRING(quadrant),2)
 
-;	print, "Flat Fielding"
-;	create_mflat, galaxy, OB, quadrant
+	print, "Wavelength calibration"
+	create_mdmask, galaxy, OB, quadrant
+endfor
+endfor
+endif
 
-;	print, "Extract quadrant"
-;	extract_VIMOS, galaxy, OB, quadrant
+if start le 8 then begin
+for OB = 1, 3 do begin
+	print, 'OB: ' + STRTRIM(STRING(OB),2)
 
+for quadrant = 1, 4 do begin
+if start le 6 then print, 'Q' + STRTRIM(STRING(quadrant),2)
+
+if start le 4 then begin	
+	print, "Flat Fielding"
+	create_mflat, galaxy, OB, quadrant
+endif
+if start le 5 then begin	
+	print, "Extract quadrant"
+	extract_VIMOS, galaxy, OB, quadrant
+endif
+
+if start le 6 then begin	
 if (cquadrant_method eq "telluric") then begin
 	print, "Flux calibration"
 	fluxcal, galaxy, OB, quadrant
 endif
+endif
 
 endfor
 
+if start le 7 then begin	
 	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
 	combine_quadrants, galaxy, OB, cquadrant_method
+endif
 
 	print, "darc"
 	darc, galaxy, OB
 endfor
-	
+endif
+
+
+if start le 9 then begin	
 	print, 'Combine all exposures'
-;; now combines all OBs
 	combine_exposures, galaxy
+endif
 
 	print, "Create rss"
 	rss2cube, galaxy
@@ -162,6 +194,11 @@ endfor
 for OB = 1, 3 do begin
     dataset = '/Data/vimosindi/' + galaxy + '-' + $
         STRTRIM(STRING(OB)+ '/Bias', 2) 
+FILE_MKDIR, dataset + '/Q1'
+FILE_MKDIR, dataset + '/Q2'
+FILE_MKDIR, dataset + '/Q3'
+FILE_MKDIR, dataset + '/Q4'
+
     files = FILE_SEARCH(dataset + '/*[0-9][0-9].[0-9][0-9][0-9].fits')
     n_files = n_elements(files)
 if files[0] eq "" then n_files = 0
