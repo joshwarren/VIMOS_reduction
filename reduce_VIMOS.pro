@@ -19,12 +19,15 @@ pro run_reduction
 	galaxy = 'ngc0612'
 	galaxy = 'ngc1399'
 	galaxy = 'ngc3100'
+	galaxy = 'ngc7075'
+	galaxy = 'pks0718-34'
+	galaxy = 'eso443-g024'
 ;	OB = '2'
 ;	quadrant = '2'
 
 
 wav_cal = 'y'
-start = 6
+start = 0
 ;; num: starting point
 ;; 0: All
 ;; 1: Bias, skip sort quadrents
