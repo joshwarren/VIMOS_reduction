@@ -27,7 +27,7 @@ pro run_reduction
 
 
 wav_cal = 'y'
-start = 0
+start = 6
 ;; num: starting point
 ;; 0: All
 ;; 1: Bias, skip sort quadrents
