@@ -2,8 +2,9 @@
 ;; Differential Atmospheric Refraction (DAR)
 
 
-pro darc, galaxy, OB
+pro darc, galaxy, OB;, quadrant
 
+;	str_quadrant = STRTRIM(STRING(quadrant),2)
         str_OB = STRTRIM(STRING(OB),2)
 
 	dataset = '/Data/vimosindi/' + galaxy +'-' + str_OB + $
