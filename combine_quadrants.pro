@@ -67,41 +67,39 @@ for i = 0 , 9 do begin
 	image1[80*i+s1[1]/2+20:80*(i+1)-41+s1[1]/2,*] = Q1_1[40*i:40*(i+1)-21,*]
 ;; odd lines
 	image1[80*i+60+s1[1]/2:80*(i+1)-1+s1[1]/2,*] = Reverse(Q1_1[40*i+20:40*(i+1)-1,*])
-
-
-
-
 ;; Q2
 ;; even lines
-;	image1[80*i+20+s1[1]/2:80*(i+1)-41+s1[1]/2,*] = Reverse(Q2_1[40*i:40*(i+1)-21,*])
+	image1[80*i+s1[1]/2:80*(i+1)-61+s1[1]/2,*] = Reverse(Q2_1[40*i:40*(i+1)-21,*])
 ;; odd lines
-;	image1[80*i+60+s1[1]/2:80*(i+1)-1+s1[1]/2,*] = Q2_1[40*i+20:40*(i+1)-1,*]
+	image1[80*i+40+s1[1]/2:80*(i+1)-21+s1[1]/2,*] = Q2_1[40*i+20:40*(i+1)-1,*]
+;; Q3
+;; even lines
+	image1[80*i:80*(i+1)-61,*] = Reverse(Q3_1[40*i:40*(i+1)-21,*])
+;; odd lines
+	image1[80*i+40:80*(i+1)-21,*] = Q3_1[40*i+20:40*(i+1)-1,*]
+;; Q4
+;; even lines
+	image1[80*i+20:80*(i+1)-41,*] = Q4_1[40*i:40*(i+1)-21,*]
+;; odd lines
+	image1[80*i+60:80*(i+1)-1,*] = Reverse(Q4_1[40*i+20:40*(i+1)-1,*])
 endfor; i
 
-;for i = 0 , 19 do begin
-;	image1[40*i+s1[1]/2:40*(i+1)-21+s1[1]/2,*]=Q3_1[20*i:20*(i+1)-1,*]
-;	image1[40*i+20+s1[1]/2:40*(i+1)-1+s1[1]/2,*]=Q4_1[20*i:20*(i+1)-1,*]
-;endfor; i
 
-
-for i =0 ,4 do begin
+a = [indgen(20), indgen(20)+40, indgen(20)+80, indgen(20)+120]
+b=reverse(a)
+c = [indgen(20)+120, indgen(20)+80, indgen(20)+40, indgen(20)]
 ;; Q1
-	image1[s1[1]/2+i*160:160*(i+1)-1+s1[1]/2,*]=reverse(image1[160*i+s1[1]/2:160*(i+1)-1+s1[1]/2,*])
-;	image1[s1[1]/2+20+i*160:160*(i+1)-121+s1[1]/2,*]=reverse(image1[160*i+s1[1]/2+100:160*(i+1)-41+s1[1]/2,*])
-
-;	image1[160*i+s1[1]/2+100:160*(i+1)-41+s1[1]/2,*]=reverse(image1[s1[1]/2+20+i*160:160*(i+1)-121+s1[1]/2,*])
-
-
-
-
+image1[s1[1]/2+[a,a+160,a+320,a+480,a+640]+20,*]=image1[s1[1]/2+[b,b+160,b+320,b+480,b+640]+20,*]
 ;; Q2
-;	image1[s1[1]/2+i*160:160*(i+1)-1+s1[1]/2,*]=reverse(image1[160*i+s1[1]/2:160*(i+1)-1+s1[1]/2,*])
+image1[s1[1]/2+[a,a+160,a+320,a+480,a+640],*]=image1[s1[1]/2+[c+640,c+480,c+320,c+160,c],*]
+;; Q3
+; Fine
+;; Q4
+image1[[a,a+160,a+320,a+480,a+640]+20,*]=reverse(image1[[c,c+160,c+320,c+480,c+640]+20,*])
 
-endfor
 
-
-
-image1[s1[1]/2:s1[1]/2+1,*] = make_array([2,n_elements(image1[s1[1]/2,*])],value=1e-16)
+;; We now have an correctly stitched together image - just need to
+;; correct it for flux now.
 
 
 
