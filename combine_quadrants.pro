@@ -5,6 +5,7 @@
 pro combine_quadrants, galaxy, OB, method
 obs=0
 
+for obs = 0,1 do begin
 str_OB = STRTRIM(STRING(OB),2)
 dataset = '/Data/vimosindi/' + Galaxy + '-' + str_OB
 if method eq "telluric" then begin
@@ -71,7 +72,7 @@ c3 = total(x4-x3)/(2*20)
 c2 = c1/2 - total(x2-x1)/(2*20)
 c2b = c3/2 - total(y2-y3)/(2*20)
 ;; consistancy test: Should be very similar (hopefully)
-print, c2, c2b
+;print, c2, c2b
 
 
 Q1 += c1/s1[2]
@@ -149,11 +150,23 @@ image1[[a,a+160,a+320,a+480,a+640]+20,*]=reverse(image1[[c,c+160,c+320,c+480,c+6
 ;image_uncer=make_array([s1[1],s1[2]], value=10e-17)
 
 
-f=file_search('/Data/vimosindi/ngc1399-1/combined/*_oextr1_vmcmb.fits')
+f=file_search('/Data/vimosindi/ngc1399-3/combined/*_oextr1_vmcmb.fits')
 fits_read, f[0], check, header
-f='/Data/vimosindi/ngc1399-2/combined/test_vmcmb.fits'
+
+print, sxpar(header, 'IMRAW')
+
+
+
+a = strsplit(files1[0], '/', /extract)
+file = strmid(a[-1],0 , strlen(a[-1])-5)
+f=dataset + '/combined/' + file + '_vmcmb.fits'
 FITS_OPEN,f,fcb, /write
 fits_write,fcb,image1, header,extver=1 
 fits_write,fcb,image1_uncert, header,extname='ERROR',extver=1
+
+
+
+
+endfor ; obs
 return
 end
