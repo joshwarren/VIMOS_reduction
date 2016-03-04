@@ -125,7 +125,7 @@ endfor
 
 if start le 7 then begin	
 	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
-	combine_quadrants, galaxy, OB, cquadrant_method
+	combine_quadrants, galaxy, OB
 endif
 
 	print, "darc"

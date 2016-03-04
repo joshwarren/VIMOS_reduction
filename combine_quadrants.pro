@@ -2,8 +2,7 @@
 ;; myself. This add a constant amount to quadrants 1, 3 and 4 to
 ;; minimise the change between adjasent spaxels at quadrant edges.
 
-pro combine_quadrants, galaxy, OB, method
-obs=0
+pro combine_quadrants, galaxy, OB
 
 for obs = 0,1 do begin
 str_OB = STRTRIM(STRING(OB),2)
@@ -30,16 +29,16 @@ opath = dataset  + '/combined'
 
 ;; Image 1
 FITS_READ, files1[0], Q1, header1
-Q1_uncert = MRDFITS(files1[0], 2, /SILENT)
+Q1_uncert = MRDFITS(files1[0], 2, header1_uncert, /SILENT)
 
 FITS_READ, files1[1], Q2, header2
-Q2_uncert = MRDFITS(files1[1], 2, /SILENT)
+Q2_uncert = MRDFITS(files1[1], 2, header2_uncert, /SILENT)
 
 FITS_READ, files1[2], Q3, header3
-Q3_uncert = MRDFITS(files1[2], 2, /SILENT)
+Q3_uncert = MRDFITS(files1[2], 2, header3_uncert, /SILENT)
 
 FITS_READ, files1[3], Q4, header4
-Q4_uncert = MRDFITS(files1[3], 2, /SILENT)
+Q4_uncert = MRDFITS(files1[3], 2, header4_uncert, /SILENT)
 
 PA1 = read_hdr(header1, 'HIERARCH ESO ADA POSANG')
 if PA1 ne 0 then message, "Image at PA: " + string(PA1) + " not 0."
@@ -139,30 +138,15 @@ image1[s1[1]/2+[a,a+160,a+320,a+480,a+640],*]=image1[s1[1]/2+[c+640,c+480,c+320,
 image1[[a,a+160,a+320,a+480,a+640]+20,*]=reverse(image1[[c,c+160,c+320,c+480,c+640]+20,*])
 
 
-
-
-
-
-
-
-
-
-;image_uncer=make_array([s1[1],s1[2]], value=10e-17)
-
-
 f=file_search('/Data/vimosindi/ngc1399-3/combined/*_oextr1_vmcmb.fits')
-fits_read, f[0], check, header
-
-print, sxpar(header, 'IMRAW')
-
 
 
 a = strsplit(files1[0], '/', /extract)
 file = strmid(a[-1],0 , strlen(a[-1])-5)
 f=dataset + '/combined/' + file + '_vmcmb.fits'
 FITS_OPEN,f,fcb, /write
-fits_write,fcb,image1, header,extver=1 
-fits_write,fcb,image1_uncert, header,extname='ERROR',extver=1
+fits_write,fcb,image1, header1,extver=1 
+fits_write,fcb,image1_uncert, header1_uncert,extname='ERROR',extver=1
 
 
 
