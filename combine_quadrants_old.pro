@@ -6,7 +6,7 @@
 ;; an OB.
 
 
-pro combine_quadrants, galaxy, OB, method
+pro combine_quadrants_old, galaxy, OB, method
 
 
 ;galaxy = 'ngc3557'
@@ -69,7 +69,9 @@ if old[0] ne "" then FILE_DELETE, old
 	opath=opath, logfile=opath + '/comb.log', $
 	/quiet
 
-
+f=file_search('/Data/vimosindi/ngc1399-2/combined/*_oextr1_vmcmb.fits')	
+fits_read, f[0], check, header	
+print, header
 
 return
 end

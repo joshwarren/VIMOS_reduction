@@ -125,8 +125,12 @@ endfor
 
 if start le 7 then begin	
 	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
-	combine_quadrants, galaxy, OB
+	combine_quadrants, galaxy, OB, cquadrant_method
 endif
+
+;; Not sure if this should be before or after darc...
+	print, "Correction1"
+	correction1, galaxy, OB
 
 	print, "darc"
 	darc, galaxy, OB
