@@ -10,7 +10,7 @@ pro darc, galaxy, OB;, quadrant
 	dataset = '/Data/vimosindi/' + galaxy +'-' + str_OB + $
 		'/combined'
 
-	files = FILE_SEARCH(dataset + '/VIMOS*vmcmb.fits')
+	files = FILE_SEARCH(dataset + '/VIMOS*vmcmb_cor.fits')
 	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = dataset
 	userparfile = '/Data/vimosindi/user_p3d.dat'

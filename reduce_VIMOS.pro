@@ -7,6 +7,7 @@
 ;; Edited to loop quadrants here rather than in indervidual
 ;; procedures. This is better as it gives more control within this
 ;; procedure. 
+;; warrenj 20160314 Added correction to fringe-like routine
 
 
 pro run_reduction
@@ -27,7 +28,7 @@ pro run_reduction
 
 
 wav_cal = 'y'
-start = 6
+start = 7
 ;; num: starting point
 ;; 0: All
 ;; 1: Bias, skip sort quadrents
@@ -37,7 +38,7 @@ start = 6
 ;; 5: Extract
 ;; 6: Flux calibration
 ;; 7: Combine quadrants
-;; 8: Diffractive atmospheric corrections
+;; 8: Diffractive atmospheric corrections and fringe corrections
 ;; 9: Combine exposures
 
 if start le 0 then begin
@@ -58,12 +59,13 @@ userparfile = '/Data/vimosindi/user_p3d.dat'
 readcol, userparfile, uparname, uparvalue, format='a, a', $
     delimiter=' ', /silent, comment=';'
 
-cquadrant_method = "telluric"
+;+
+;cquadrant_method = "telluric"
+;i_nofcdgoodnorm = where(uparname eq "nofcdgoodnorm", nofcdgoodnorm)
+;if nofcdgoodnorm then cquadrant_method = "nofcdgoodnorm"
+;-
 
-i_nofcdgoodnorm = where(uparname eq "nofcdgoodnorm", nofcdgoodnorm)
-
-if nofcdgoodnorm then cquadrant_method = "nofcdgoodnorm"
-
+cquadrant_method = "nofcdgoodnorm"
 
 
 
@@ -129,7 +131,7 @@ if start le 7 then begin
 endif
 
 ;; Not sure if this should be before or after darc...
-	print, "Correction1"
+	print, "Fringe-like correction"
 	correction1, galaxy, OB
 
 	print, "darc"
