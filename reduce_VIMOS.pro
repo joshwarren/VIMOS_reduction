@@ -14,11 +14,11 @@ pro run_reduction
 
 
 	galaxy = 'ngc3557'
-	galaxy = 'ic1459'
-	galaxy = 'ic1531'
-	galaxy = 'ic4296'
-	galaxy = 'ngc0612'
-	galaxy = 'ngc1399'
+;	galaxy = 'ic1459'
+;	galaxy = 'ic1531'
+;	galaxy = 'ic4296'
+;	galaxy = 'ngc0612'
+;	galaxy = 'ngc1399'
 ;	galaxy = 'ngc3100'
 ;	galaxy = 'ngc7075'
 ;	galaxy = 'pks0718-34'
@@ -27,8 +27,8 @@ pro run_reduction
 ;	quadrant = '2'
 
 
-wav_cal = 'y'
-start = 7
+wav_cal = 'n'
+start = 6
 ;; num: starting point
 ;; 0: All
 ;; 1: Bias, skip sort quadrents
@@ -65,7 +65,8 @@ readcol, userparfile, uparname, uparvalue, format='a, a', $
 ;if nofcdgoodnorm then cquadrant_method = "nofcdgoodnorm"
 ;-
 
-cquadrant_method = "nofcdgoodnorm"
+;cquadrant_method = "nofcdgoodnorm"
+cquadrant_method = "telluric"
 
 
 
