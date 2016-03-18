@@ -78,6 +78,9 @@ for i = 0, max(x)-1 do begin
     endfor ; j
 endfor ; i
 
+
+
+
 ;; Finally correct the spectrum
 correction[where(correction eq 0)] = 1
 ifu = ifu/correction
@@ -91,6 +94,11 @@ for i = 0 , s[1]-1 do begin
     rss_data[i,*] = ifu[x[i]-1,y[i]-1,*]
     rss_data_uncert[i,*] = ifu_uncert[x[i]-1,y[i]-1,*]
 endfor ; i
+
+;; Clear old files incase file name has changed so future routines are
+;; not confused by old files.
+old = FILE_SEARCH(dataset + '/*_darc*')
+if old[0] ne "" then FILE_DELETE, old
 
 
 ;; Writting the fits file
