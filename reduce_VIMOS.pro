@@ -11,7 +11,7 @@
 
 
 pro run_reduction
-
+COMPILE_OPT idl2, HIDDEN
 
 	galaxy = 'ngc3557'
 ;	galaxy = 'ic1459'

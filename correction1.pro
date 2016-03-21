@@ -73,8 +73,9 @@ correction = ifu/med_ifu
 
 for i = 0, max(x)-1 do begin
     for j = 0, max(y)-1 do begin
-	lowess, indgen(s[2]), reform(correction[i,j,*], s[2]), 150, y_new, order=2
+	lowess2, indgen(s[2]), reform(correction[i,j,*], s[2]), 150, y_new, order=2
 	correction[i,j,*]=y_new
+;        correction[i,j,*] = lowess(indgen(s[2]), reform(correction[i,j,*], s[2]), 150, 2)
     endfor ; j
 endfor ; i
 
@@ -82,11 +83,15 @@ endfor ; i
 
 
 ;; Finally correct the spectrum
-correction[where(correction eq 0)] = 1
+correction[where(correction eq 0)-1] = !VALUES.F_NAN
+correction[where(correction eq 0)+1] = !VALUES.F_NAN
+correction[where(correction eq 0)] = !VALUES.F_NAN
 ifu = ifu/correction
 ifu_uncert /=correction
 
-ifu[where(ifu eq 1)] = 0
+ifu[where(ifu eq 1)+1] = !VALUES.F_NAN
+ifu[where(ifu eq 1)-1] = !VALUES.F_NAN
+ifu[where(ifu eq 1)] = !VALUES.F_NAN
 
 
 ;; Convert back to RSS format
