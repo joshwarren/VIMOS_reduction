@@ -14,11 +14,11 @@ pro run_reduction
 COMPILE_OPT idl2, HIDDEN
 
 	galaxy = 'ngc3557'
-;	galaxy = 'ic1459'
+	galaxy = 'ic1459'
 ;	galaxy = 'ic1531'
 ;	galaxy = 'ic4296'
 ;	galaxy = 'ngc0612'
-	galaxy = 'ngc1399'
+;	galaxy = 'ngc1399'
 ;	galaxy = 'ngc3100'
 ;	galaxy = 'ngc7075'
 ;	galaxy = 'pks0718-34'
@@ -146,7 +146,7 @@ if start le 9 then begin
 	combine_exposures, galaxy
 endif
 
-	print, "Create rss"
+	print, "Create cube format"
 	rss2cube, galaxy
 
 
