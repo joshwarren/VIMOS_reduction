@@ -3,7 +3,7 @@
 ;; ==================================================================
 ;; warrenj 20160304 Routine based on A&A 541. A82 (2012)
 
-pro correction1, galaxy, OB
+pro correction, galaxy, OB
 str_OB = STRTRIM(STRING(OB),2)
 dataset = '/Data/vimosindi/' + Galaxy + '-' + str_OB + '/combined'
 
@@ -67,13 +67,20 @@ for i = 0, max(x)-1 do begin
     endfor ; j
 endfor ; i
 
-med_ifu[where(med_ifu eq 0)] = 1
-correction = ifu/med_ifu
+;med_ifu[where(med_ifu eq 0)] = 1
+l = where(med_ifu ne 0)
+
+correction = ifu
+correction[l] = ifu[l]/med_ifu[l]
 
 
 for i = 0, max(x)-1 do begin
     for j = 0, max(y)-1 do begin
 	lowess2, indgen(s[2]), reform(correction[i,j,*], s[2]), 150, y_new, order=2
+;       CALL_EXTERNAL('~/IDL_Library/fortran/lowess.so', 'lowess_warapper_', $
+;		indgen(s[2]), reform(correction[i,j,*], s[2]), 1, $
+;		150.0/2800.0, 2, y_new, rw, res)
+
 	correction[i,j,*]=y_new
 ;        correction[i,j,*] = lowess(indgen(s[2]), reform(correction[i,j,*], s[2]), 150, 2)
     endfor ; j
@@ -83,15 +90,15 @@ endfor ; i
 
 
 ;; Finally correct the spectrum
-correction[where(correction eq 0)-1] = !VALUES.F_NAN
-correction[where(correction eq 0)+1] = !VALUES.F_NAN
-correction[where(correction eq 0)] = !VALUES.F_NAN
+;correction[where(correction eq 0)-1] = !VALUES.F_NAN
+;correction[where(correction eq 0)+1] = !VALUES.F_NAN
+;correction[where(correction eq 0)] = !VALUES.F_NAN
 ifu = ifu/correction
 ifu_uncert /=correction
 
-ifu[where(ifu eq 1)+1] = !VALUES.F_NAN
-ifu[where(ifu eq 1)-1] = !VALUES.F_NAN
-ifu[where(ifu eq 1)] = !VALUES.F_NAN
+;ifu[where(ifu eq 1)+1] = !VALUES.F_NAN
+;ifu[where(ifu eq 1)-1] = !VALUES.F_NAN
+;ifu[where(ifu eq 1)] = !VALUES.F_NAN
 
 
 ;; Convert back to RSS format

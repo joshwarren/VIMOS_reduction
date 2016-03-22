@@ -133,7 +133,7 @@ endif
 
 ;; Not sure if this should be before or after darc...
 	print, "Fringe-like correction"
-	correction1, galaxy, OB
+	correction, galaxy, OB
 
 ;	print, "darc"
 ;	darc, galaxy, OB
