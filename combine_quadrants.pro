@@ -48,6 +48,10 @@ endfor ; q
 PA1 = read_hdr(header1, 'HIERARCH ESO ADA POSANG')
 if PA1 ne 0 then message, "Image at PA: " + string(PA1) + " not 0."
 
+Q1 = ifu[20:39,20:39,*]
+Q2 = ifu[0:19,20:39,*]
+Q3 = ifu[0:19,0:19,*]
+Q4 = ifu[20:39,0:19,*]
 
 ;; Finding constants c1, c2 and c3
 y1 = total(ifu[20:39,20,*],3)
@@ -71,10 +75,12 @@ c2a = c1/2 - d21/(2*20)
 c2b = c3/2 - d23/(2*20)
 
 ;; Apply constants
-ifu[20:39,20:39,*] += c1/s[2]
-Q2a = ifu[0:19,20:39,*] + c2a/s[2]
-Q2b = ifu[0:19,20:39,*] + c2b/s[2]
-ifu[0:19,0:19,*] += c3/s[2]
+Q1[where(Q1 ne 0)] += c1/s[2]
+Q2a = Q2
+Q2b = Q2
+Q2a[where(Q2 ne 0)] = Q2[where(Q2 ne 0)] + c2a/s[2]
+Q2b[where(Q2 ne 0)] = Q2[where(Q2 ne 0)] + c2b/s[2]
+Q3[where(Q3 ne 0)] += c3/s[2]
 
 ;; consistance check
 y2a = total(Q2a[0:19,0,*],3)
@@ -90,7 +96,9 @@ d_total_a = total([abs(d41), abs(d43), abs(d21), abs(d23)])
 d_total_b = total([abs(d41), abs(d43), abs(d21), abs(d23)])
 
 ;; Apply c2
-if d_total_a lt d_total_b then ifu[0:19,20:39,*]=Q2a else ifu[0:19,20:39,*]=Q2b
+if d_total_a lt d_total_b then $
+	ifu[0:19,20:39,*]=Q2a else $
+	ifu[0:19,20:39,*]=Q2b
 
 
 ;; Convert back to RSS format
