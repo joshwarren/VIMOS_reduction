@@ -95,10 +95,16 @@ d23b = total(y2b-y3)
 d_total_a = total([abs(d41), abs(d43), abs(d21), abs(d23)])
 d_total_b = total([abs(d41), abs(d43), abs(d21), abs(d23)])
 
+ifu[20:39,20:39,*] = Q1
 ;; Apply c2
 if d_total_a lt d_total_b then $
 	ifu[0:19,20:39,*]=Q2a else $
 	ifu[0:19,20:39,*]=Q2b
+ifu[0:19,0:19,*] = Q3
+
+
+
+
 
 
 ;; Convert back to RSS format

@@ -18,8 +18,8 @@ COMPILE_OPT idl2, HIDDEN
 ;	galaxy = 'ic1531'
 ;	galaxy = 'ic4296'
 ;	galaxy = 'ngc0612'
-;	galaxy = 'ngc1399'
-;	galaxy = 'ngc3100'
+	galaxy = 'ngc1399'
+	galaxy = 'ngc3100'
 ;	galaxy = 'ngc7075'
 ;	galaxy = 'pks0718-34'
 ;	galaxy = 'eso443-g024'
@@ -27,8 +27,19 @@ COMPILE_OPT idl2, HIDDEN
 ;	quadrant = '2'
 
 
+
+
+
+galaxies = ['ic1531','ic4296','ngc0612','ngc3100','ngc7075','pks0718-34','eso443-g024']
+
+
+
+for i = 0, n_elements(galaxies)-1 do begin
+galaxy = galaxies[i]
+
 wav_cal = 'n'
 start = 6
+bin = 'y'
 ;; num: starting point
 ;; 0: All
 ;; 1: Bias, skip sort quadrents
@@ -41,6 +52,7 @@ start = 6
 ;; 8: Diffractive atmospheric corrections and fringe corrections
 ;; 9: Combine exposures
 
+print, galaxy
 if start le 0 then begin
 	print, "Sorting quadrants"
 	sort_quadrants, galaxy
@@ -127,7 +139,7 @@ endif
 endfor
 
 if start le 7 then begin	
-	print, 'combine quadrants in OB ' + STRTRIM(STRING(OB),2)
+	print, 'Combine quadrants in OB ' + STRTRIM(STRING(OB),2)
 	combine_quadrants, galaxy, OB, cquadrant_method
 endif
 
@@ -137,6 +149,7 @@ endif
 
 ;	print, "darc"
 ;	darc, galaxy, OB
+	print, ""
 endfor
 endif
 
@@ -149,6 +162,17 @@ endif
 	print, "Create cube format"
 	rss2cube, galaxy
 
+
+
+;if bin eq 'y' then begin
+;	print, "Binning and finding templates"
+;	full_analysis, galaxy=galaxy
+;endif
+print, ""
+
+CLOSE, /All
+
+endfor ;  galaxy
 
 
 return
