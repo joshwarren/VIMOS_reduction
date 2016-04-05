@@ -15,6 +15,7 @@ FILE_MKDIR, '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'
 
 files = FILE_SEARCH(dataset + '/*_cor_darc.fits',count=c)
 if c eq 0 then files = FILE_SEARCH(dataset + '/*_cor.fits')
+;if c eq 0 then files = FILE_SEARCH(dataset + '/*_vmcmb.fits')
 
 	parfile = '/Data/idl_libraries/p3d/data/instruments/vimos/bvimos_hr.prm'
 	opath = '/Data/vimosindi/reduced/' + galaxy + '/combined_exposures'

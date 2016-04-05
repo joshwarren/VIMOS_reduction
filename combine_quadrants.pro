@@ -104,9 +104,6 @@ ifu[0:19,0:19,*] = Q3
 
 
 
-
-
-
 ;; Convert back to RSS format
 fiber_pos_file='/Volumes/Data/idl_libraries/p3d/data/instruments/vimos/vimos_positions_rer.dat'
 READCOL, fiber_pos_file, i, id, x, y, /SILENT, COMMENT=';'

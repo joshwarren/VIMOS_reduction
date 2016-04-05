@@ -19,7 +19,7 @@ COMPILE_OPT idl2, HIDDEN
 ;	galaxy = 'ic4296'
 ;	galaxy = 'ngc0612'
 	galaxy = 'ngc1399'
-	galaxy = 'ngc3100'
+;	galaxy = 'ngc3100'
 ;	galaxy = 'ngc7075'
 ;	galaxy = 'pks0718-34'
 ;	galaxy = 'eso443-g024'
@@ -34,11 +34,11 @@ galaxies = ['ic1531','ic4296','ngc0612','ngc3100','ngc7075','pks0718-34','eso443
 
 
 
-for i = 0, n_elements(galaxies)-1 do begin
-galaxy = galaxies[i]
+;for i = 0, n_elements(galaxies)-1 do begin
+;galaxy = galaxies[i]
 
 wav_cal = 'n'
-start = 6
+start = 7
 bin = 'y'
 ;; num: starting point
 ;; 0: All
@@ -172,7 +172,7 @@ print, ""
 
 CLOSE, /All
 
-endfor ;  galaxy
+;endfor ;  galaxy
 
 
 return
