@@ -18,7 +18,7 @@ COMPILE_OPT idl2, HIDDEN
 ;	galaxy = 'ic1531'
 ;	galaxy = 'ic4296'
 ;	galaxy = 'ngc0612'
-	galaxy = 'ngc1399'
+;	galaxy = 'ngc1399'
 ;	galaxy = 'ngc3100'
 ;	galaxy = 'ngc7075'
 ;	galaxy = 'pks0718-34'

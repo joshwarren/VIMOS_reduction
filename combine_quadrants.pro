@@ -103,6 +103,7 @@ if d_total_a lt d_total_b then $
 ifu[0:19,0:19,*] = Q3
 
 
+;ifu[5,10,*] = make_array(n_elements(ifu[5,10,*]), value=max(ifu))
 
 ;; Convert back to RSS format
 fiber_pos_file='/Volumes/Data/idl_libraries/p3d/data/instruments/vimos/vimos_positions_rer.dat'
