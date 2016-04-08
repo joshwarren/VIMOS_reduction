@@ -64,16 +64,23 @@ x2 = total(ifu[19,20:39,*],3)
 x3 = total(ifu[19,0:19,*],3)
 x4 = total(ifu[20,0:19,*],3)
 
-c1 = (total(x4)/total(x1))^(1/20)
-c3 = (total(y4)/total(y3))^(1/20)
-c2a = ((total(y4)/total(y3))*(total(x3)/total(x2)))^(1/20)
-c2b = ((total(x4)/total(x1))*(total(y1)/total(y2)))^(1/20)
+d41 = total(y4-y1)
+d43 = total(x4-x3)
+d21 = total(x2-x1)
+d23 = total(y2-y3)
+
+c1 = d41/(2*20)
+c3 = d43/(2*20)
+c2a = c1/2 - d21/(2*20)
+c2b = c3/2 - d23/(2*20)
 
 ;; Apply constants
-Q1 *= c1
-Q2a = Q2*c2a
-Q2b = Q2*c2b
-Q3 *= c3
+Q1[where(Q1 ne 0)] += c1/s[2]
+Q2a = Q2
+Q2b = Q2
+Q2a[where(Q2 ne 0)] = Q2[where(Q2 ne 0)] + c2a/s[2]
+Q2b[where(Q2 ne 0)] = Q2[where(Q2 ne 0)] + c2b/s[2]
+Q3[where(Q3 ne 0)] += c3/s[2]
 
 ;; consistance check
 y2a = total(Q2a[0:19,0,*],3)
@@ -81,23 +88,19 @@ y2b = total(Q2b[0:19,0,*],3)
 x2a = total(Q2a[19,0:19,*],3)
 x2b = total(Q2b[19,0:19,*],3)
 
-y1 = total(Q1[*,0,*],3)
-x3 = total(Q3[19,*,*],3)
-
-da = abs(x2a-x3) + abs(y2a-y1)
-db = abs(x2b-x3) + abs(y2b-y1)
+d21a = total(x2a-x1)
+d21b = total(x2b-x1)
+d23a = total(y2a-y3)
+d23b = total(y2b-y3)
+d_total_a = total([abs(d41), abs(d43), abs(d21), abs(d23)])
+d_total_b = total([abs(d41), abs(d43), abs(d21), abs(d23)])
 
 ifu[20:39,20:39,*] = Q1
-ifu_uncert[20:39,20:39,*] *= c1
 ;; Apply c2
-if da lt db then $
+if d_total_a lt d_total_b then $
 	ifu[0:19,20:39,*]=Q2a else $
 	ifu[0:19,20:39,*]=Q2b
-if da lt db then $
-	ifu_uncert[0:19,20:39,*] *= c2a else $
-	ifu_uncert[0:19,20:39,*] *= c2b
 ifu[0:19,0:19,*] = Q3
-ifu_uncert[0:19,0:19,*] *= c3
 
 
 ;ifu[5,10,*] = make_array(n_elements(ifu[5,10,*]), value=max(ifu))

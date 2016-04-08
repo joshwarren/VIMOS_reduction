@@ -94,7 +94,7 @@ correction[where(correction eq 0)-1] = 1
 correction[where(correction eq 0)+1] = 1
 correction[where(correction eq 0)] = 1
 ifu = ifu/correction
-ifu_uncert /=correction^2
+ifu_uncert /=correction
 
 ;ifu[where(ifu eq 1)+1] = !VALUES.F_NAN
 ;ifu[where(ifu eq 1)-1] = !VALUES.F_NAN
