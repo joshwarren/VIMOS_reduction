@@ -30,7 +30,7 @@ COMPILE_OPT idl2, HIDDEN
 
 
 
-galaxies = ['ic1531','ic4296','ngc0612','ngc3100','ngc7075','pks0718-34','eso443-g024']
+galaxies = ['ngc3557','ic1531','ic4296','ngc0612']
 
 
 
