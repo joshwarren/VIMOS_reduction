@@ -54,20 +54,20 @@ Q3 = ifu[0:19,0:19,*]
 Q4 = ifu[20:39,0:19,*]
 
 ;; Finding constants c1, c2 and c3
-y1 = total(ifu[20:39,20,*],3)
-y2 = total(ifu[0:19,20,*],3)
-y3 = total(ifu[0:19,19,*],3)
-y4 = total(ifu[20:39,19,*],3)
+y1 = total(ifu[20:39,20,*])
+y2 = total(ifu[0:19,20,*])
+y3 = total(ifu[0:19,19,*])
+y4 = total(ifu[20:39,19,*])
 
-x1 = total(ifu[20,20:39,*],3)
-x2 = total(ifu[19,20:39,*],3)
-x3 = total(ifu[19,0:19,*],3)
-x4 = total(ifu[20,0:19,*],3)
+x1 = total(ifu[20,20:39,*])
+x2 = total(ifu[19,20:39,*])
+x3 = total(ifu[19,0:19,*])
+x4 = total(ifu[20,0:19,*])
 
-c1 = (total(x4)/total(x1))^(1/20)
-c3 = (total(y4)/total(y3))^(1/20)
-c2a = ((total(y4)/total(y3))*(total(x3)/total(x2)))^(1/20)
-c2b = ((total(x4)/total(x1))*(total(y1)/total(y2)))^(1/20)
+c1 = (x4/x1)^(1/20)
+c3 = (y4/y3)^(1/20)
+c2a = ((y4/y3)*(x3/x2))^(1/20)
+c2b = ((x4/x1)*(y1/y2))^(1/20)
 
 ;; Apply constants
 Q1 *= c1
@@ -76,16 +76,17 @@ Q2b = Q2*c2b
 Q3 *= c3
 
 ;; consistance check
-y2a = total(Q2a[0:19,0,*],3)
-y2b = total(Q2b[0:19,0,*],3)
-x2a = total(Q2a[19,0:19,*],3)
-x2b = total(Q2b[19,0:19,*],3)
+y2a = total(Q2a[0:19,0,*])
+y2b = total(Q2b[0:19,0,*])
+x2a = total(Q2a[19,0:19,*])
+x2b = total(Q2b[19,0:19,*])
 
-y1 = total(Q1[*,0,*],3)
-x3 = total(Q3[19,*,*],3)
+y1 = total(Q1[*,0,*])
+x3 = total(Q3[19,*,*])
 
 da = abs(x2a-x3) + abs(y2a-y1)
 db = abs(x2b-x3) + abs(y2b-y1)
+
 
 ifu[20:39,20:39,*] = Q1
 ifu_uncert[20:39,20:39,*] *= c1
