@@ -75,7 +75,8 @@ correction[l] = ifu[l]/med_ifu[l]
 
 for i = 0, max(x)-1 do begin
     for j = 0, max(y)-1 do begin
-	lowess2, indgen(s[2]), reform(correction[i,j,*], s[2]), 150, y_new, order=2
+;	lowess2, indgen(s[2]), reform(correction[i,j,*], s[2]), 150, y_new, order=2
+	y_new = lowess(indgen(s[2]), reform(correction[i,j,*], s[2]), 150, 2)
 	correction[i,j,*]=y_new
     endfor ; j
 endfor ; i
