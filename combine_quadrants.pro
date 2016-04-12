@@ -64,39 +64,39 @@ x2 = total(ifu[19,20:39,*])
 x3 = total(ifu[19,0:19,*])
 x4 = total(ifu[20,0:19,*])
 
-c1 = (x4/x1)^(1/20)
-c3 = (y4/y3)^(1/20)
-c2a = ((y4/y3)*(x3/x2))^(1/20)
-c2b = ((x4/x1)*(y1/y2))^(1/20)
+c1 = (y2/y1)^(1/20)
+c3 = (x2/x3)^(1/20)
+c4a = (c1*(x1/x4))^(1/20)
+c4b = (c3*(y3/y4))^(1/20)
 
 ;; Apply constants
 Q1 *= c1
-Q2a = Q2*c2a
-Q2b = Q2*c2b
+Q4a = Q4*c4a
+Q4b = Q4*c4b
 Q3 *= c3
 
 ;; consistance check
-y2a = total(Q2a[0:19,0,*])
-y2b = total(Q2b[0:19,0,*])
-x2a = total(Q2a[19,0:19,*])
-x2b = total(Q2b[19,0:19,*])
+y4a = total(Q4a[0:19,0,*])
+y4b = total(Q4b[0:19,0,*])
+x4a = total(Q4a[19,0:19,*])
+x4b = total(Q4b[19,0:19,*])
 
 y1 = total(Q1[*,0,*])
 x3 = total(Q3[19,*,*])
 
-da = abs(x2a-x3) + abs(y2a-y1)
-db = abs(x2b-x3) + abs(y2b-y1)
+da = abs(x4a-x1) + abs(y4a-y3)
+db = abs(x4b-x1) + abs(y4b-y3)
 
 
 ifu[20:39,20:39,*] = Q1
 ifu_uncert[20:39,20:39,*] *= c1
 ;; Apply c2
 if da lt db then $
-	ifu[0:19,20:39,*]=Q2a else $
-	ifu[0:19,20:39,*]=Q2b
+	ifu[20:39,0:19,*]=Q4a else $
+	ifu[20:39,0:19,*]=Q4b
 if da lt db then $
-	ifu_uncert[0:19,20:39,*] *= c2a else $
-	ifu_uncert[0:19,20:39,*] *= c2b
+	ifu_uncert[20:39,0:19,*] *= c4a else $
+	ifu_uncert[20:39,0:19,*] *= c4b
 ifu[0:19,0:19,*] = Q3
 ifu_uncert[0:19,0:19,*] *= c3
 
