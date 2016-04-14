@@ -32,13 +32,14 @@ COMPILE_OPT idl2, HIDDEN
 
 galaxies = ['ngc3557','ic1531','ic4296','ngc0612']
 
-galaxies = ['ngc3557', 'ic1459', 'ic1531', 'ic4296', 'ngc0612', 'ngc3100', 'ngc7075', 'pks0718-34', 'eso443-g024']
+galaxies = ['ngc3557', 'ic1459', 'ic1531', 'ic4296', 'ngc0612', 'ngc1399', 'ngc3100', 'ngc7075', 'pks0718-34', 'eso443-g024']
 
-;for i = 0, n_elements(galaxies)-1 do begin
-;galaxy = galaxies[i]
+for i = 0, n_elements(galaxies)-1 do begin
+galaxy = galaxies[i]
 
 wav_cal = 'n'
-start = 7
+inject = 'n'
+start = 10
 bin = 'y'
 ;; num: starting point
 ;; 0: All
@@ -50,7 +51,8 @@ bin = 'y'
 ;; 6: Flux calibration
 ;; 7: Combine quadrants
 ;; 8: Diffractive atmospheric corrections and fringe corrections
-;; 9: Combine exposures
+;; 9: Combine exposures and injection
+;; 10: Make cube format
 
 print, galaxy
 if start le 0 then begin
@@ -157,6 +159,8 @@ endif
 if start le 9 then begin	
 	print, 'Combine all exposures'
 	combine_exposures, galaxy
+	
+	if inject eq 'y' then insert, galaxy
 endif
 
 	print, "Create cube format"
@@ -172,7 +176,7 @@ print, ""
 
 CLOSE, /All
 
-;endfor ;  galaxy
+endfor ;  galaxy
 
 
 return

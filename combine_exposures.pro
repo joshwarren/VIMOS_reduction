@@ -26,7 +26,7 @@ if c eq 0 then files = FILE_SEARCH(dataset + '/*_vmcmb.fits')
 ;; Clear old files incase file name has changed so future routines are
 ;; not confused by old files.
 old = FILE_SEARCH('/Data/vimosindi/reduced/' + galaxy + $
-	'/combined_exposures/*_cexp.fits')
+	'/combined_exposures/*.fits')
 if old[0] ne "" then FILE_DELETE, old
 
 
