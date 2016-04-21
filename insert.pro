@@ -26,7 +26,21 @@ for i=0, s[1]-1 do begin
  endfor ; i
 
 ; Inject false data
-ifu[5,10,*] = MAKE_ARRAY(s[2], value=0.05*max(ifu))
+ifu[11,6,*] = MAKE_ARRAY(s[2], value=0.5*max(ifu))
+ifu[10,6,1000] = max(ifu)
+ifu[10,6,1001] = max(ifu)
+ifu[10,6,1002] = max(ifu)
+
+ifu[10,6,1500] = max(ifu)
+ifu[10,6,1501] = max(ifu)
+ifu[10,6,1502] = max(ifu)
+ifu[10,6,1200] = max(ifu)
+ifu[10,6,1201] = max(ifu)
+ifu[10,6,1202] = max(ifu)
+
+ifu[10,6,*] = MAKE_ARRAY(s[2], value=0.5*max(ifu))
+ifu[9,6,*] = MAKE_ARRAY(s[2], value=0.5*max(ifu))
+
 
 
 ;; Back into rss format
