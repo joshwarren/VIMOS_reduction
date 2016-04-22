@@ -38,8 +38,8 @@ galaxies = ['ngc3557', 'ic1459', 'ic1531', 'ic4296', 'ngc0612', 'ngc1399', 'ngc3
 ;galaxy = galaxies[i]
 
 wav_cal = 'n'
-inject = 'y'
-start = 9
+inject = 'n'
+start = 7
 bin = 'y'
 ;; num: starting point
 ;; 0: All
@@ -147,7 +147,7 @@ endif
 
 ;; Not sure if this should be before or after darc...
 	print, "Fringe-like correction"
-	correction, galaxy, OB
+;	correction, galaxy, OB
 
 ;	print, "darc"
 ;	darc, galaxy, OB
