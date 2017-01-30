@@ -21,6 +21,10 @@ def correction(galaxy):
 	ifu = f[0].data
 	ifu_uncert = f[1].data
 
+	import matplotlib.pyplot as plt 
+	fig,ax=plt.subplots(4,2)
+
+	
 	s = ifu.shape
 		
 	med_ifu = np.zeros(s)
@@ -56,7 +60,6 @@ def correction(galaxy):
 		
 
 	med_ifu[np.where(med_ifu == 0)] = 1
-
 	correction = ifu/med_ifu
 
 	for i in range(s[1]):
@@ -66,13 +69,10 @@ def correction(galaxy):
 			# y_new = lowess(np.arange(s[0]), correction[:,i,j], 150/s[0], iter=2)
 			correction[:,i,j] = y_new
 
-	## Finally correct the spectrum
-	# correction[np.where(correction == 0)-1] = 1
-	# correction[np.where(correction == 0)+1] = 1
-	# correction[np.where(correction == 0)] = 1
 	ifu /= correction
-	ifu_uncert /=correction
+	# ifu_uncert /=correction
 
+	
 
 	## ************ Includes port of corrections made in combine_quadrants.pro. ****
 
@@ -130,12 +130,6 @@ def correction(galaxy):
 	ifu[:, 0:20, 0:20] = Q3
 	ifu_uncert[:, 0:20, 0:20] *= c3
 
-
-
-	print np.nanmax(Q1),np.nanmax(Q2),np.nanmax(Q3),np.nanmax(Q4)
-
-
-
 	ex0 = fits.PrimaryHDU(ifu, f[0].header)
 	ex1 = fits.ImageHDU(ifu_uncert, f[1].header, name='ERROR')
 	f_new = fits.HDUList([ex0, ex1, f[2], f[3]])
@@ -144,4 +138,14 @@ def correction(galaxy):
 	f_new.writeto(corr_fits_file, clobber=True)
 	
 if __name__ == '__main__':
-	correction('ngc3557')
+	galaxies = np.array([#'ngc3557',
+		'ic1459', 
+		'ic1531', 
+		'ic4296', 
+		'ngc0612',
+		'ngc1399',
+		'ngc3100',
+		'ngc7075', 
+		'pks0718-34', 
+		'eso443-g024'])	
+	for gal in galaxies: correction(gal)
